@@ -18,8 +18,9 @@ public class App
         while(sair){
             System.out.println("MENU: ");
             System.out.println("1- Cadastrar Lanche: ");
-            System.out.println("2= Listar Lanches: ");
-            System.out.println("3- Sair");
+            System.out.println("2- Listar Lanches: ");
+            System.out.println("3- Calcular Total a Pagar: ");
+            System.out.println("4- Sair");
             int menu = new Scanner(System.in).nextInt();
 
             switch(menu){
@@ -55,11 +56,39 @@ public class App
                     break;
 
                 case 3:
+                    System.out.println("Informe o código do lanche:");
+                    int codigo = new Scanner(System.in).nextInt();
+
+                    System.out.println("Informe a quantidade do lanche:");
+                    int quantidade = new Scanner(System.in).nextInt();
+
+                    double total = calcularTotal(list, codigo, quantidade);
+                    if (total >= 0) {
+                        System.out.printf("Total: R$ %.2f%n", total);
+                    } else {
+                        System.out.println("Código do lanche não encontrado.");
+                    }
+                    break;
+
+                case 4:
                     System.out.println("");
                     System.out.println("Saindo do Progama");
                     exit(0);
 
+                default:
+                    System.out.println("Opção inválida.");
+                    break;
+
             }
         }
+    }
+
+    public static double calcularTotal(ArrayList<Lanche> list, int codigo, int quantidade) {
+        for (Lanche lanche : list) {
+            if (lanche.getId() == codigo) {
+                return lanche.getPreco() * quantidade;
+            }
+        }
+        return -1;
     }
 }
